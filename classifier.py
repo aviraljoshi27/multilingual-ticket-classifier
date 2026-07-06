@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 import anthropic
-from datasets import load_dataset
 
 load_dotenv()
 anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
@@ -26,7 +25,21 @@ URGENCY_LEVELS = ["Low", "Medium", "High"]
 
 
 def classify_ticket(subject: str, body: str) -> dict:
-    """Classify a support ticket's category, urgency, and language via Claude."""
+    """
+    Classify a support ticket's category, urgency, and language via Claude.
+
+    Args:
+        subject: takes subject of the ticket
+        body: full message of the ticket
+
+    Returns:
+        result = {
+        "category": str,
+        "urgency": str,
+        "language": str,
+        "raw_response": str,
+    }
+    """
     prompt = (
         f"Classify this support ticket. Reply in exactly this format, nothing else:\n\n"
         f"Category: <one of {', '.join(CATEGORIES)}>\n"
